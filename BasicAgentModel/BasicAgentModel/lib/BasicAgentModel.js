@@ -102,10 +102,10 @@ var probTypeA = 0.5;
 
 
 // To manage the queues, we need to keep track of customerIDs.
-var nextCustomerID_A = 0; // increment this and assign it to the next attending customer of type A
-var nextCustomerID_B = 0; // increment this and assign it to the next attending customer of type B
-var nextBuyingCustomerID_A = 1; //this is the id of the next patient of type A to be treated by the doctor
-var nextBuyingCustomerID_B = 1; //this is the id of the next patient of type B to be treated by the doctor
+var nextCustomerID = 0; // increment this and assign it to the next attending customer of type A
+//var nextCustomerID_B = 0; // increment this and assign it to the next attending customer of type B
+var nextBuyingCustomerID = 1; //this is the id of the next patient of type A to be treated by the doctor
+//var nextBuyingCustomerID_B = 1; //this is the id of the next patient of type B to be treated by the doctor
 
 // This next function is executed when the script is loaded. It contains the page initialization code.
 (function() {
@@ -132,10 +132,10 @@ function redrawWindow(){
 	
 	// Re-initialize simulation variables
 	
-    var nextCustomerID_A = 0; // increment this and assign it to the next attending customer of type A
-    var nextCustomerID_B = 0; // increment this and assign it to the next attending customer of type B
-    var nextBuyingCustomerID_A = 1; //this is the id of the next customer of type A to be attended to by cashier
-    var nextBuyingCustomerID_B = 1; //this is the id of the next customer of type B to be attended to by cashier
+    var nextCustomerID = 0; // increment this and assign it to the next attending customer of type A
+    //var nextCustomerID_B = 0; // increment this and assign it to the next attending customer of type B
+    var nextBuyingCustomerID = 1; //this is the id of the next customer of type A to be attended to by cashier
+    //var nextBuyingCustomerID_B = 1; //this is the id of the next customer of type B to be attended to by cashier
     currentTime = 0;
     cashier.state = IDLE;
 	statistics[0].cumulativeValue=0;
