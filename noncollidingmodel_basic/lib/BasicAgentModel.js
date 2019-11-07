@@ -19,25 +19,26 @@ const urlDoctor1 = "images/Doctor_Female.png";
 const urlDoctor2 = "images/Doctor_Male.png";
 const urlReceptionist ="images/receptionist-icon.png"
 const urlChair = "images/Chair-icon.png";
-
+/////akdfjbglkadjfglkdajfglk
 ////////////////
-const table = "images/table.jpg";
-const drinksdispenser = "images/drink-machine.jpg";
+const table = "images/wooden_table.png";
+const drinksdispenser = "images/drink_dispenser.png";
 const customers = "images/patient-icon.png"
+const door = "images/door.png"
 ///////////////
 //Initializing all the locations for the tables
 var tableRow_1 = 18;
 var tablerCol_1 = 4;
 var tableRow_2 = 5;
-var tablerCol_2 = 8;
+var tableCol_2 = 15;
 var tableRow_3 = 12;
-var tablerCol_3 = 10;
+var tableCol_3 = 21;
 var tableRow_4 = 5;
-var tablerCol_4 = 12;
+var tableCol_4 = 26;
 var tableRow_5 = 12;
-var tablerCol_5 = 14;
+var tableCol_5 = 30;
 var tableRow_6 = 6;
-var tablerCol_6 = 16;
+var tableCol_6 = 32;
 
 ///////////////
 
@@ -45,6 +46,20 @@ var doctorRow = 10;
 var doctorCol = 20;
 var receptionistRow = 1;
 var receptionistCol = 20;
+
+//////////////
+
+var cashierRow = 24;
+var cashierCol = 36;
+
+var doorRow = 24;
+var doorCol = 20;
+
+var drinkdispenserRow = 18;
+var drinkdispenserCol = 36;
+
+/////////////
+
 
 //a patient enters the hospital UNTREATED; he or she then is QUEUEING to be treated by a doctor;
 // then INTREATMENT with the doctor; then TREATED;
@@ -64,20 +79,25 @@ const BUSY = 1;
 // There are two types of caregivers in our system: doctors and receptionists
 const DOCTOR = 0;
 const RECEPTIONIST = 1;
+const DRINKMACHINE = 2;
+const ENTRANCE = 3;
 
 // patients is a dynamic list, initially empty
 var patients = [];
 // caregivers is a static list, populated with a receptionist and a doctor
 var caregivers = [
-    {"type":DOCTOR,"label":"Doctor","location":{"row":doctorRow,"col":doctorCol},"state":IDLE},
-	{"type":RECEPTIONIST,"label":"Receptionist","location":{"row":receptionistRow,"col":receptionistCol},"state":IDLE}
+  {"type":DOCTOR,"label":"Doctor","location":{"row":doctorRow,"col":doctorCol},"state":IDLE},
+	{"type":RECEPTIONIST,"label":"Ca$hier","location":{"row":cashierRow,"col":cashierCol},"state":IDLE},
+  {"type":DRINKMACHINE,"label":"Drink dispenser","location":{"row":drinkdispenserRow,"col":drinkdispenserCol},"state":IDLE},
+  {"type":ENTRANCE,"label":"Entrance","location":{"row":doorRow,"col":doorCol},"state":IDLE}
 ];
 var doctor = caregivers[0]; // the doctor is the first element of the caregivers list.
 
 // We can section our screen into different areas. In this model, the waiting area and the staging area are separate.
 var areas =[
  {"label":"Waiting Area","startRow":4,"numRows":3,"startCol":19,"numCols":3,"color":"pink"},
- {"label":"Staging Area","startRow":doctorRow-1,"numRows":1,"startCol":doctorCol-2,"numCols":5,"color":"red"}
+ {"label":"Staging Area","startRow":cashierRow,"numRows":1,"startCol":cashierCol-5,"numCols":5,"color":"pink"},
+ {"label":"Drinks Area","startRow":drinkdispenserRow,"numRows":1,"startCol":drinkdispenserCol-5,"numCols":5,"color":"blue"}
 ]
 var waitingRoom = areas[0]; // the waiting room is the first element of the areas array
 
@@ -139,7 +159,7 @@ var seatCount = 9;
 	// All elements of the DOM will be available here
 	window.addEventListener("resize", redrawWindow); //Redraw whenever the window is resized
 	simTimer = window.setInterval(simStep, animationDelay); // call the function simStep every animationDelay milliseconds
-	document.getElementById("title").textContent = "Keerthana Janmugam";
+	document.getElementById("title").textContent = "Stimulate Models & Anal yr Sis";
 	redrawWindow();
 })();
 
@@ -279,7 +299,7 @@ function updateSurface(){
 	 .attr("y",function(d){var cell= getLocationCell(d.location); return cell.y+"px";})
 	 .attr("width", Math.min(cellWidth,cellHeight)+"px")
 	 .attr("height", Math.min(cellWidth,cellHeight)+"px")
-	 .attr("xlink:href",function(d){if (d.type==DOCTOR) return urlDoctor1; else return urlReceptionist;});
+	 .attr("xlink:href",function(d){if (d.type==DOCTOR) return urlDoctor1; if (d.type==DRINKMACHINE) return drinksdispenser; if (d.type == ENTRANCE) return door; else return urlReceptionist;});
 
 	// It would be nice to label the caregivers, so we add a text element to each new caregiver group
 	newcaregivers.append("text")
@@ -339,12 +359,12 @@ function updateSurface(){
  	// Create an svg group ("g") for each new entry in the data list; give it class "caregiver"
  	var newtables = alltables.enter().append("g").attr("class","tables");
 
- 	newcaregivers.append("svg:image")
+ 	newtables.append("svg:image")
  	 .attr("x",function(d){var cell= getLocationCell(d.location); return cell.x+"px";})
  	 .attr("y",function(d){var cell= getLocationCell(d.location); return cell.y+"px";})
  	 .attr("width", Math.min(cellWidth,cellHeight)+"px")
  	 .attr("height", Math.min(cellWidth,cellHeight)+"px")
- 	 .attr("xlink:href",table);
+ 	 .attr("xlink:href",function(d){return table});
 
    //////////////
 
